@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { submitBooking } from "@/lib/bookings.functions";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +11,7 @@ import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
 export function BookingForm() {
-  const submit = useServerFn(submitBooking);
+  const submit = useMutation(api.bookings.submit);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState({
@@ -21,8 +23,9 @@ export function BookingForm() {
     phone: "",
   });
 
-  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
+  const update =
+    (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,22 +40,16 @@ export function BookingForm() {
     }
     setLoading(true);
     try {
-      const res = await submit({
-        data: {
-          name: form.name.trim(),
-          surname: form.surname.trim(),
-          age,
-          gender: form.gender,
-          occupation: form.occupation,
-          phone: form.phone.trim(),
-        },
+      await submit({
+        name: form.name.trim(),
+        surname: form.surname.trim(),
+        age,
+        gender: form.gender,
+        occupation: form.occupation,
+        phone: form.phone.trim(),
       });
-      if (res.success) {
-        setDone(true);
-        toast.success("Booking received! We'll be in touch soon.");
-      } else {
-        toast.error(res.error ?? "Something went wrong.");
-      }
+      setDone(true);
+      toast.success("Booking received! We'll be in touch soon.");
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again.");
