@@ -65,6 +65,24 @@ export default function HomePage() {
                 <ShieldCheck className="h-4 w-4" /> Admin
               </Link>
             )}
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp Channel"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary-foreground/30 text-primary-foreground hover:border-[var(--gold)] hover:text-[var(--gold)]"
+            >
+              <MessageCircle className="h-4 w-4" />
+            </a>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary-foreground/30 text-primary-foreground hover:border-[var(--gold)] hover:text-[var(--gold)]"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
             <Link
               href="/recaps"
               className="rounded-md border border-primary-foreground/30 px-4 py-2 text-sm font-medium text-primary-foreground hover:border-[var(--gold)] hover:text-[var(--gold)]"
@@ -81,94 +99,100 @@ export default function HomePage() {
         style={{ background: "var(--gradient-hero)" }}
       >
         <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_30%_20%,oklch(0.78_0.13_85_/_0.4),transparent_60%)]" />
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:py-24 md:grid-cols-2 md:items-center">
-          <div className="text-primary-foreground">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-[var(--gold)]">
-              <BookOpen className="h-3.5 w-3.5" /> Bold Bible Talk · Weekly
-            </span>
-            <h1 className="mt-5 font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
-              Open Discussion. <span className="text-[var(--gold)]">Everyone invited.</span>
-            </h1>
-            {isLoadingPoster ? (
-              <div className="mt-6 rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/5 p-5">
-                <Skeleton className="h-3 w-24 bg-primary-foreground/15" />
-                <Skeleton className="mt-3 h-8 w-3/4 bg-primary-foreground/15" />
-                <div className="mt-4 space-y-2.5">
-                  <Skeleton className="h-3.5 w-full bg-primary-foreground/10" />
-                  <Skeleton className="h-3.5 w-11/12 bg-primary-foreground/10" />
-                  <Skeleton className="h-3.5 w-4/5 bg-primary-foreground/10" />
-                </div>
+        <div className="relative mx-auto max-w-2xl px-6 py-16 text-primary-foreground sm:py-24 md:max-w-4xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-[var(--gold)]">
+            <BookOpen className="h-3.5 w-3.5" /> Bold Bible Talk · Weekly
+          </span>
+          <h1 className="mt-5 font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+            Open Discussion. <span className="text-[var(--gold)]">Everyone invited.</span>
+          </h1>
+          {isLoadingPoster ? (
+            <div className="mt-6 rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/5 p-5">
+              <Skeleton className="h-3 w-24 bg-primary-foreground/15" />
+              <Skeleton className="mt-3 h-8 w-3/4 bg-primary-foreground/15" />
+              <Skeleton className="mt-4 aspect-[4/5] w-full rounded-2xl bg-primary-foreground/10" />
+              <div className="mt-4 space-y-2.5">
+                <Skeleton className="h-3.5 w-full bg-primary-foreground/10" />
+                <Skeleton className="h-3.5 w-11/12 bg-primary-foreground/10" />
+                <Skeleton className="h-3.5 w-4/5 bg-primary-foreground/10" />
               </div>
-            ) : upcomingTitle ? (
-              <div className="mt-6 rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/5 p-5">
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--gold)]">
+            </div>
+          ) : upcomingTitle ? (
+            <div className="mt-6 rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/5 p-5">
+              <div className="md:grid md:grid-cols-2 md:items-center md:gap-6">
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--gold)] md:col-start-2 md:row-start-1">
                   This week's talk
                 </p>
-                <h2 className="mt-1 font-serif text-2xl font-semibold text-primary-foreground sm:text-3xl">
+                <h2 className="mt-1 font-serif text-2xl font-semibold text-primary-foreground sm:text-3xl md:col-start-2 md:row-start-2 md:mt-1">
                   {upcomingTitle}
                 </h2>
+                <div className="relative mt-4 md:col-start-1 md:row-span-3 md:row-start-1 md:mt-0">
+                  <div className="absolute -inset-2 rounded-3xl bg-[var(--gold)]/20 blur-2xl" />
+                  <img
+                    src={posterSrc}
+                    alt={`${upcomingTitle} poster`}
+                    className="relative w-full rounded-2xl shadow-[var(--shadow-elegant)]"
+                  />
+                </div>
                 {upcomingDescription && (
-                  <p className="mt-3 whitespace-pre-wrap text-sm text-primary-foreground/85 sm:text-base">
+                  <p className="mt-4 whitespace-pre-wrap text-sm text-primary-foreground/85 sm:text-base md:col-start-2 md:row-start-3 md:mt-3">
                     {upcomingDescription}
                   </p>
                 )}
               </div>
-            ) : (
-              <p className="mt-5 max-w-lg text-base text-primary-foreground/80 sm:text-lg">
+            </div>
+          ) : (
+            <div className="mt-6">
+              <p className="max-w-lg text-base text-primary-foreground/80 sm:text-lg">
                 Join us every Thursday for an honest, friendly discussion of God's word — over a meal, with real people, real questions, and real answers from Scripture.
               </p>
-            )}
-
-            <div className="mt-8 flex flex-col gap-3 text-primary-foreground/90 sm:flex-row sm:flex-wrap sm:gap-x-6">
-              <span className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-[var(--gold)]" />
-                {isLoadingPoster ? (
-                  <Skeleton className="h-4 w-32 bg-primary-foreground/15" />
-                ) : upcomingDate ? (
-                  new Date(upcomingDate).toLocaleDateString(undefined, {
-                    weekday: "long",
-                    month: "short",
-                    day: "numeric",
-                  })
-                ) : (
-                  "Every Thursday"
-                )}
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-[var(--gold)]" />
-                {isLoadingPoster ? <Skeleton className="h-4 w-12 bg-primary-foreground/15" /> : upcomingTime}
-              </span>
-              <span className="flex items-center gap-2"><MapPin className="h-5 w-5 text-[var(--gold)]" /> Mochachos, Rosebank Mall</span>
+              <div className="relative mx-auto mt-6 w-full max-w-sm">
+                <div className="absolute -inset-4 rounded-3xl bg-[var(--gold)]/20 blur-2xl" />
+                <img
+                  src={posterSrc}
+                  alt="Bold Bible Talk poster"
+                  className="relative w-full rounded-2xl shadow-[var(--shadow-elegant)]"
+                />
+              </div>
             </div>
+          )}
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#book"
-                style={{ backgroundImage: "var(--gradient-gold)" }}
-                className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold text-[var(--gold-foreground)] shadow-[var(--shadow-gold)] transition hover:opacity-90"
-              >
-                Book a Bible study
-              </a>
-              <Link
-                href="/recaps"
-                className="inline-flex items-center justify-center gap-1.5 rounded-md border border-primary-foreground/30 px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-foreground/10"
-              >
-                Past recaps <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+          <div className="mt-8 flex flex-col gap-3 text-primary-foreground/90 sm:flex-row sm:flex-wrap sm:gap-x-6">
+            <span className="flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-[var(--gold)]" />
+              {isLoadingPoster ? (
+                <Skeleton className="h-4 w-32 bg-primary-foreground/15" />
+              ) : upcomingDate ? (
+                new Date(upcomingDate).toLocaleDateString(undefined, {
+                  weekday: "long",
+                  month: "short",
+                  day: "numeric",
+                })
+              ) : (
+                "Every Thursday"
+              )}
+            </span>
+            <span className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-[var(--gold)]" />
+              {isLoadingPoster ? <Skeleton className="h-4 w-12 bg-primary-foreground/15" /> : upcomingTime}
+            </span>
+            <span className="flex items-center gap-2"><MapPin className="h-5 w-5 text-[var(--gold)]" /> Mochachos, Rosebank Mall</span>
           </div>
 
-          <div className="relative mx-auto w-full max-w-sm">
-            <div className="absolute -inset-4 rounded-3xl bg-[var(--gold)]/20 blur-2xl" />
-            {isLoadingPoster ? (
-              <Skeleton className="relative aspect-[4/5] w-full rounded-2xl bg-primary-foreground/10" />
-            ) : (
-              <img
-                src={posterSrc}
-                alt={upcomingTitle ? `${upcomingTitle} poster` : "Bold Bible Talk poster"}
-                className="relative w-full rounded-2xl shadow-[var(--shadow-elegant)]"
-              />
-            )}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#book"
+              style={{ backgroundImage: "var(--gradient-gold)" }}
+              className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold text-[var(--gold-foreground)] shadow-[var(--shadow-gold)] transition hover:opacity-90"
+            >
+              Book a Bible study
+            </a>
+            <Link
+              href="/recaps"
+              className="inline-flex items-center justify-center gap-1.5 rounded-md border border-primary-foreground/30 px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-foreground/10"
+            >
+              Past recaps <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
