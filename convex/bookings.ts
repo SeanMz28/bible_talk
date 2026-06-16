@@ -7,7 +7,11 @@ export const submit = mutation({
     surname: v.string(),
     age: v.number(),
     gender: v.union(v.literal("male"), v.literal("female")),
-    occupation: v.union(v.literal("working"), v.literal("student")),
+    occupation: v.union(
+      v.literal("working"),
+      v.literal("student"),
+      v.literal("other"),
+    ),
     phone: v.string(),
   },
   handler: async (ctx, args) => {

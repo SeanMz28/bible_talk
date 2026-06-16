@@ -22,7 +22,11 @@ export default defineSchema({
     surname: v.string(),
     age: v.number(),
     gender: v.union(v.literal("male"), v.literal("female")),
-    occupation: v.union(v.literal("working"), v.literal("student")),
+    occupation: v.union(
+      v.literal("working"),
+      v.literal("student"),
+      v.literal("other"),
+    ),
     phone: v.string(),
   }),
   // Mirror of Better Auth's user table with an extra `role` field.

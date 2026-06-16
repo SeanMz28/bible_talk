@@ -14,12 +14,13 @@ export function BookingForm() {
   const submit = useMutation(api.bookings.submit);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  type Occupation = "" | "working" | "student" | "other";
   const [form, setForm] = useState({
     name: "",
     surname: "",
     age: "",
     gender: "" as "" | "male" | "female",
-    occupation: "" as "" | "working" | "student",
+    occupation: "" as Occupation,
     phone: "",
   });
 
@@ -30,7 +31,7 @@ export function BookingForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.gender || !form.occupation) {
-      toast.error("Please select gender and whether you're working or a student.");
+      toast.error("Please select gender and what best describes you.");
       return;
     }
     const age = parseInt(form.age, 10);
@@ -118,14 +119,17 @@ export function BookingForm() {
           <Label>I am</Label>
           <RadioGroup
             value={form.occupation}
-            onValueChange={(v) => setForm((f) => ({ ...f, occupation: v as "working" | "student" }))}
-            className="flex gap-4 pt-1"
+            onValueChange={(v) => setForm((f) => ({ ...f, occupation: v as Occupation }))}
+            className="flex flex-wrap gap-4 pt-1"
           >
             <label className="flex items-center gap-2 text-sm">
               <RadioGroupItem value="working" /> Working
             </label>
             <label className="flex items-center gap-2 text-sm">
               <RadioGroupItem value="student" /> Student
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <RadioGroupItem value="other" /> Other
             </label>
           </RadioGroup>
         </div>
